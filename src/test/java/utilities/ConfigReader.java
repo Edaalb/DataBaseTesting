@@ -4,32 +4,22 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
-public class ConfigReader { static Properties properties;
-
+public class ConfigReader {
+    public static Properties properties;
     static {
-
-        String filePath = "configuration.properties";
-
+        String path="configuration.properties";
         try {
-            FileInputStream fis = new FileInputStream(filePath);
-            properties = new Properties();
+            FileInputStream fis=new FileInputStream(path);
+            properties=new Properties();
             properties.load(fis);
-
-
-        } catch (FileNotFoundException e) {
-            System.out.println("Configuration.properties can not be found");
+            fis.close();
         } catch (IOException e) {
-            System.out.println(" Could not load properties File");
+            e.printStackTrace();
         }
-
-
     }
-
-
     public static String getProperty(String key){
-
         return properties.getProperty(key);
-
     }
-
 }
+
+

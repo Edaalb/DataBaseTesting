@@ -1,4 +1,5 @@
 package dbStepdefinitions;
+
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.junit.Assert;
@@ -6,12 +7,15 @@ import org.junit.Assert;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-public class CovidCasesStepDefinitions { private static Connection connection;
+
+public class CovidCasesStepDefinitions {
+
+    private static Connection connection;
     private static Statement statement;
     private static ResultSet resultSet;
     private static String url = "jdbc:mysql://localhost:3306/sys?serverTimezone=UTC";
     private static final String username = "root";
-    private static final String password = "ervanaz2012";
+    private static final String password = "12345";
 
     @Given("Users should connect to the database with their password,username")
     public void users_should_connect_to_the_database_with_their_password_username() throws SQLException {
@@ -58,7 +62,6 @@ public class CovidCasesStepDefinitions { private static Connection connection;
             NumberOfCases.add(resultSet.getInt(field));
         }
         System.out.println(NumberOfCases);
-        Assert.assertTrue(NumberOfCases.contains(9854));
+        Assert.assertTrue(NumberOfCases.contains(880));
     }
-
 }

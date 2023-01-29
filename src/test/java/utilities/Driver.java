@@ -2,78 +2,50 @@ package utilities;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-
+import org.openqa.selenium.opera.OperaDriver;
+import org.openqa.selenium.safari.SafariDriver;
 import java.time.Duration;
 
 public class Driver {
-    static WebDriver driver;
 
-    private  Driver(){
-        // Singleton Pattern : to prevent creating new object from this class, we can use singleton patter.
-        // creating a private constructer is more than enough
-        // it is for security
-
+    private Driver(){
     }
-
-    public static WebDriver getDriver() {
-
-        String browser = ConfigReader.getProperty("browser");
-
-        if (driver == null) {
-
-            switch (browser) {
-
+    private static WebDriver  driver;
+    public static WebDriver getDriver(){
+        if(driver==null){   // bu if sayesinde kod calisirken bir kere new keyword ile driver olusturulaca
+            // diger kullanimlarda new devreye girmeyecek
+            switch (ConfigReader.getProperty("browser")){
                 case "chrome":
-
                     WebDriverManager.chromedriver().setup();
-                    driver = new ChromeDriver();
+                    driver=new ChromeDriver();
                     break;
-
-                case "edge":
-
-                    WebDriverManager.edgedriver().setup();
-                    driver = new EdgeDriver();
-                    break;
-
                 case "firefox":
                     WebDriverManager.firefoxdriver().setup();
-                    driver= new FirefoxDriver();
+                    driver=new FirefoxDriver();
                     break;
-
+                case "opera":
+                    WebDriverManager.operadriver().setup();
+                    driver=new OperaDriver();
+                    break;
+                case "safari":
+                    WebDriverManager.safaridriver().setup();
+                    driver=new SafariDriver();
+                    break;
                 default:
                     WebDriverManager.chromedriver().setup();
-                    driver = new ChromeDriver();
-
-
-
+                    driver=new ChromeDriver();
             }
-            driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
-            driver.manage().window().maximize();
         }
-
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(15));
         return driver;
-
-
     }
-
-    public static void closeDriver() {
-
-        if (driver != null) {
-            driver.close();
-            driver = null;
-        }
-
-    }
-
-    public static void quitDriver() {
-
-        if (driver != null) {
+    public static void closeDriver(){
+        if (driver!=null){
             driver.quit();
-            driver = null;
+            driver=null;
         }
-
     }
 
 }
